@@ -12,21 +12,35 @@ code {
     monospace;
 }
 
-#input {
-  text-align: center;
-  margin-top: 200px;
-}
-.Text {
+.page {
+  height: 100vh;
   width: 50%;
-  position: fixed;
+  margin-left: 25%;
+}
+
+.input {
+  margin-top: 100px;
+}
+
+.Text,
+.textOutput {
+  width: 100%;
   resize: none;
 }
 
-.Submit {
-  float: none;
+.submit,
+#erase {
+  margin-top: 10px;
+  float: left;
 }
 
-#output {
-  margin-top: 400px;
-  text-align: center;
+.textOutput {
+  margin-top: 100px;
+}
+
+#erase {
+  visibility: hidden;
+}
+
+.output {
 }

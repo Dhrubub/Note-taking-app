@@ -27,7 +27,22 @@ ReactDOM.render(
 
 const Page = (props) => {
   const [text, setText] = useState("");
-  const [output, copyText] = useState("");
+  let i = 0;
+  let h = 100;
+  const [output = [i], copyText] = useState("");
+
+  function erase(e) {
+    let x = document.getElementById("erase");
+    x.style.visibility = "hidden";
+    copyText((e.target.value = ""));
+  }
+
+  function show(e) {
+    let x = document.getElementById("erase");
+    x.style.visibility = "visible";
+    copyText((e.target.value = text));
+    i++;
+  }
 
   useEffect(() => {
     console.log("Component mounted");
@@ -38,26 +53,30 @@ const Page = (props) => {
   }, [text]);
 
   return (
-    <div>
-      <div class="Text" id="input">
+    <div class="page">
+      <div class="input">
         <textarea
           class="Text"
           rows="5"
           value={text}
           onChange={(e) => setText(e.target.value)}
         ></textarea>
-      </div>
 
-      <div class="submit">
-        <button onClick={(e) => copyText((e.target.value = text))}>
+        <button
+          class="submit"
+          onClick={(e) => {
+            show(e);
+          }}
+        >
           Submit
         </button>
-
-        <button onClick={(e) => copyText((e.target.value = ""))}>Erase</button>
       </div>
 
-      <div class="Text" id="output">
-        <textarea class="Text" rows="5" value={output}></textarea>
+      <div class="output">
+        <p class="textOutput">{output}</p>
+        <button id="erase" onClick={(e) => erase(e)}>
+          Erase
+        </button>
       </div>
     </div>
   );
