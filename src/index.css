@@ -12,6 +12,16 @@ code {
     monospace;
 }
 
+#root {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: peachpuff;
+  position: fixed;
+  overflow: auto;
+}
+
 .page {
   height: 100vh;
   width: 50%;
@@ -23,9 +33,11 @@ code {
 }
 
 .Text,
-.textOutput {
+.output,
+#textOutput {
   width: 100%;
   resize: none;
+  border-color: black;
 }
 
 .submit,
@@ -34,13 +46,11 @@ code {
   float: left;
 }
 
-.textOutput {
-  margin-top: 100px;
+#textOutput {
+  margin-top: 50px;
 }
 
-#erase {
-  visibility: hidden;
-}
-
-.output {
+.list {
+  margin: 0;
+  padding: 0;
 }

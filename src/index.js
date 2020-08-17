@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { render } from "@testing-library/react";
+import "bootstrap/dist/css/bootstrap.css";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,37 +13,44 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-/* class TextBox extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div class="Text" id="input">
-        <textarea class="Text" rows="10"></textarea>
-      </div>
-    );
-  }
-} */
-
 const Page = (props) => {
-  const [text, setText] = useState("");
-  let i = 0;
-  let h = 100;
-  const [output = [i], copyText] = useState("");
+  const [count, setCount] = useState(0);
+  const [boxes, editBox] = useState([]);
+
+  const [text, setText] = useState(boxes);
 
   function erase(e) {
-    let x = document.getElementById("erase");
-    x.style.visibility = "hidden";
-    copyText((e.target.value = ""));
+    setText((e.target.value = ""));
+    editBox(boxes.concat(<ul class="list" key={count}></ul>));
   }
 
-  function show(e) {
-    let x = document.getElementById("erase");
-    x.style.visibility = "visible";
-    copyText((e.target.value = text));
-    i++;
+  const element = (
+    <div class="output">
+      <textarea
+        readonly
+        class="alert-info"
+        id="textOutput"
+        rows="5"
+        value={text}
+      ></textarea>
+      <button class="btn btn-danger" id="erase" onClick={(e) => erase(e)}>
+        Erase
+      </button>
+    </div>
+  );
+
+  function submit(e) {
+    setText((e.target.value = text));
+
+    editBox(
+      boxes.concat(
+        <ul class="list" key={count}>
+          {element}
+        </ul>
+      )
+    );
+
+    setCount(count + 1);
   }
 
   useEffect(() => {
@@ -63,21 +72,16 @@ const Page = (props) => {
         ></textarea>
 
         <button
-          class="submit"
+          class="submit btn btn-success"
           onClick={(e) => {
-            show(e);
+            submit(e);
           }}
         >
           Submit
         </button>
       </div>
 
-      <div class="output">
-        <p class="textOutput">{output}</p>
-        <button id="erase" onClick={(e) => erase(e)}>
-          Erase
-        </button>
-      </div>
+      {boxes}
     </div>
   );
 };
