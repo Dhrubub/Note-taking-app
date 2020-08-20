@@ -1,87 +1,68 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { render } from "@testing-library/react";
 import "bootstrap/dist/css/bootstrap.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById("root")
-);
-
 const Page = (props) => {
-  const [count, setCount] = useState(0);
-  const [boxes, editBox] = useState([]);
+  //  Array containing all the created notes
+  const [notes, setNotes] = useState([]);
 
-  const [text, setText] = useState(boxes);
+  //  Array to store the text from input
+  const [text, setText] = useState("");
 
-  function erase(e) {
-    setText((e.target.value = ""));
-    editBox(boxes.concat(<ul class="list" key={count}></ul>));
+  //  Adds a new note element
+  function handleSubmit() {
+    setNotes([...notes, text]);
+    setText("");
   }
 
-  const element = (
-    <div class="output">
-      <textarea
-        readonly
-        class="alert-info"
-        id="textOutput"
-        rows="5"
-        value={text}
-      ></textarea>
-      <button class="btn btn-danger" id="erase" onClick={(e) => erase(e)}>
-        Erase
-      </button>
-    </div>
-  );
-
-  function submit(e) {
-    setText((e.target.value = text));
-
-    editBox(
-      boxes.concat(
-        <ul class="list" key={count}>
-          {element}
-        </ul>
-      )
-    );
-
-    setCount(count + 1);
+  //  Removes the specified note element
+  function handleErase(note, index) {
+    setNotes(notes.filter((current, id) => id !== index));
   }
-
-  useEffect(() => {
-    console.log("Component mounted");
-  }, []);
-
-  useEffect(() => {
-    console.log("Text changed: " + text);
-  }, [text]);
 
   return (
-    <div class="page">
-      <div class="input">
+    <div className="page">
+      <div className="input">
         <textarea
-          class="Text"
+          className="Text"
           rows="5"
           value={text}
+          s
           onChange={(e) => setText(e.target.value)}
         ></textarea>
-
-        <button
-          class="submit btn btn-success"
-          onClick={(e) => {
-            submit(e);
-          }}
-        >
-          Submit
-        </button>
+        <a href="#current">
+          <button
+            id="dhruv"
+            className="submit btn btn-success"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Submit
+          </button>
+        </a>
       </div>
 
-      {boxes}
+      {/* Maps the string from notes to an unordered list */}
+      {notes.map((note, index) => (
+        <ul className="list" key={index}>
+          <div className="output">
+            <p readOnly className=" alert-info p-2 " id="textOutput">
+              {note}
+            </p>
+            <button
+              className="btn btn-danger"
+              id="erase"
+              onClick={() => handleErase(note, index)}
+            >
+              Erase
+            </button>
+          </div>
+        </ul>
+      ))}
     </div>
   );
 };

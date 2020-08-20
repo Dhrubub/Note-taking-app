@@ -23,7 +23,7 @@ code {
 }
 
 .page {
-  height: 100vh;
+  /* height: 100vh; */
   width: 50%;
   margin-left: 25%;
 }
@@ -37,6 +37,7 @@ code {
 #textOutput {
   width: 100%;
   resize: none;
+  overflow: auto;
   border-color: black;
 }
 
@@ -44,10 +45,11 @@ code {
 #erase {
   margin-top: 10px;
   float: left;
+  margin-bottom: 20px;
 }
 
 #textOutput {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .list {
